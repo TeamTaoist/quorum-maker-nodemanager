@@ -2,23 +2,23 @@ package service
 
 import (
 	"bytes"
+	"encoding/json"
 	"fmt"
-	"github.com/magiconair/properties"
-	"github.com/synechron-finlabs/quorum-maker-nodemanager/client"
-	"github.com/synechron-finlabs/quorum-maker-nodemanager/contractclient"
-	"github.com/synechron-finlabs/quorum-maker-nodemanager/contracthandler"
-	"github.com/synechron-finlabs/quorum-maker-nodemanager/util"
-	"gopkg.in/gomail.v2"
 	"io/ioutil"
 	"os"
 	"os/exec"
+	"path/filepath"
 	"regexp"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/magiconair/properties"
 	log "github.com/sirupsen/logrus"
-	"path/filepath"
-	"encoding/json"
+	"github.com/synechron-finlabs/quorum-maker-nodemanager/client"
+	"github.com/synechron-finlabs/quorum-maker-nodemanager/contractclient"
+	"github.com/synechron-finlabs/quorum-maker-nodemanager/contracthandler"
+	"github.com/synechron-finlabs/quorum-maker-nodemanager/util"
 )
 
 type ConnectionInfo struct {
@@ -829,7 +829,7 @@ func (nsi *NodeServiceImpl) deployContract(pubKeys []string, fileName []string, 
 			start = start + 2
 			if j != (len(contractBytecodesAll) - 1) {
 				delimiter := reEnd.FindStringIndex(bytecode)
-				thisContractBytecode = bytecode[start: delimiter[1]-1]
+				thisContractBytecode = bytecode[start : delimiter[1]-1]
 			} else {
 				thisContractBytecode = bytecode[start:]
 			}
@@ -880,7 +880,7 @@ func (nsi *NodeServiceImpl) deployContract(pubKeys []string, fileName []string, 
 			start = start + 2
 			if j != (len(contractABIAll) - 1) {
 				delimiter := reEnd.FindStringIndex(abiString)
-				thisContractABI = abiString[start: delimiter[1]-1]
+				thisContractABI = abiString[start : delimiter[1]-1]
 			} else {
 				thisContractABI = abiString[start:]
 			}
@@ -1190,7 +1190,7 @@ func (nsi *NodeServiceImpl) sendTestMail() {
 		mailCont := string(b)
 		message := fmt.Sprintf(mailCont, nodename)
 		for i := 0; i < len(recipients); i++ {
-			nsi.sendMail(mailServerConfig.Host, mailServerConfig.Port, mailServerConfig.Username, mailServerConfig.Password, "Quorum Maker Notification Service configured", message, recipients[i])
+			nsi.sendMail(mailServerConfig.Host, mailServerConfig.Port, mailServerConfig.Username, mailServerConfig.Password, "Node Maker Notification Service configured", message, recipients[i])
 		}
 	}
 }
